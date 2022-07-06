@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'general.dart';
+
 class ItemCard extends StatelessWidget {
   const ItemCard({Key? key}) : super(key: key);
 
@@ -32,7 +34,9 @@ class ItemCard extends StatelessWidget {
                         size: 25,
                         color: Colors.green,
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        openForm(context);
+                      },
                     ),
                     const SizedBox(
                       width: 5,

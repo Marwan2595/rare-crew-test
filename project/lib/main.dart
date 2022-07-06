@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rare_crew_test/views/home_view.dart';
+import 'package:rare_crew_test/view_models/navigation_container.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const HomeScreen(),
+      home: const NavigationContainer(),
     );
   }
 }
