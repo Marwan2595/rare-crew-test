@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:rare_crew_test/view_models/navigation_container.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rare_crew_test/views/navigation_container.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope(
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -16,7 +19,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const NavigationContainer(),
+      home: NavigationContainer(
+        index: 0,
+      ),
     );
   }
 }

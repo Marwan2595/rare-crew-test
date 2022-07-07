@@ -1,25 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:rare_crew_test/view_models/home_view_model.dart';
 import 'package:rare_crew_test/views/home_view.dart';
-import '../components/general.dart';
-import '../views/profile_view.dart';
+
+import 'profile_view.dart';
 
 class NavigationContainer extends StatefulWidget {
-  const NavigationContainer({Key? key}) : super(key: key);
-
+  NavigationContainer({Key? key, required this.index}) : super(key: key);
+  final int index;
   @override
   State<NavigationContainer> createState() => _NavigationContainerState();
 }
 
 class _NavigationContainerState extends State<NavigationContainer> {
+  HomeViewModel hvm = HomeViewModel();
   int navigationIndex = 0;
-  List<Widget> screens = [
-    const HomeScreen(),
-    const ProfileScreen(),
-  ];
+
+  List<Widget> screens = [];
   List<String> titles = [
     "Home",
     "Profile",
   ];
+  // void updateIndex() {
+  //   navigationIndex = -1;
+  //   setState(() {
+  //     navigationIndex = 0;
+  //   });
+  // }
+
+  @override
+  void initState() {
+    super.initState();
+    navigationIndex = widget.index;
+    screens = [
+      HomeScreen(),
+      ProfileScreen(),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -31,7 +48,8 @@ class _NavigationContainerState extends State<NavigationContainer> {
         body: screens[navigationIndex],
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            openForm(context);
+            //openForm(context);
+            hvm.addItem(title: "Hello", description: "Newwwwwwwwwww");
           },
           child: const Icon(
             Icons.add,

@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rare_crew_test/models/item.dart';
+import 'package:rare_crew_test/view_models/home_view_model.dart';
 
-import 'general.dart';
+import '../views/navigation_container.dart';
 
-class ItemCard extends StatelessWidget {
-  const ItemCard({Key? key}) : super(key: key);
+class ItemCard extends ConsumerWidget {
+  ItemCard({Key? key, required this.cardItem}) : super(key: key);
+  final Item cardItem;
 
+  HomeViewModel vm = HomeViewModel();
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Card(
       elevation: 5,
       child: Container(
@@ -19,9 +24,9 @@ class ItemCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  "Title",
-                  style: TextStyle(
+                Text(
+                  cardItem.title.toString(),
+                  style: const TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                   ),
@@ -35,7 +40,15 @@ class ItemCard extends StatelessWidget {
                         color: Colors.green,
                       ),
                       onPressed: () {
-                        openForm(context);
+                        //openForm(context);
+                        ref.refresh(vm.homeAddProvider);
+                        // updateIndex();
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => NavigationContainer(index: 0),
+                          ),
+                        );
                       },
                     ),
                     const SizedBox(
@@ -53,9 +66,9 @@ class ItemCard extends StatelessWidget {
                 )
               ],
             ),
-            const Text(
-              "Description Description Description Description Description Description Description",
-              style: TextStyle(
+            Text(
+              cardItem.description.toString(),
+              style: const TextStyle(
                 fontSize: 15,
                 color: Colors.grey,
                 fontWeight: FontWeight.w500,
