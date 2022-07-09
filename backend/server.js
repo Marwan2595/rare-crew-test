@@ -26,7 +26,7 @@ const users = [
         password: "12345",
         name: "Admin 3",
         phone: "01036497786",
-        gender: "male",
+        gender: "female",
     },
     {
         username: "admin4",
@@ -36,8 +36,8 @@ const users = [
         gender: "male",
     },
 ]
-app.get('/users', authenticateToken, (req, res) => {
-    res.json(users.filter(user => user.username === req.user.username))
+app.get('/user', authenticateToken, (req, res) => {
+    res.json(users.find(user => user.username === req.user.username))
 })
 function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization']
