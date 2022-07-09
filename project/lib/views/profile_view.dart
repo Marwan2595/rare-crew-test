@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rare_crew_test/views/navigation_container.dart';
 
-import '../view_models/home_view_model.dart';
+import '../view_models/profile_view_model.dart';
 
 class ProfileScreen extends ConsumerWidget {
   ProfileScreen({Key? key}) : super(key: key);
-  HomeViewModel vm = HomeViewModel();
+  ProfileViewModel profileViewModel = ProfileViewModel();
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    profileViewModel.getUser();
     return Scaffold(
         body: SafeArea(
       child: Column(
@@ -108,36 +108,18 @@ class ProfileScreen extends ConsumerWidget {
                 children: [
                   Expanded(
                     child: Column(
-                      children: [
-                        IconButton(
-                          icon: const Icon(
-                            Icons.edit,
-                            size: 25,
-                            color: Colors.green,
-                          ),
-                          onPressed: () {
-                            //openForm(context);
-                            ref.refresh(vm.homeAddProvider);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    NavigationContainer(index: 0),
-                              ),
-                            );
-                          },
-                        ),
-                        const Text(
+                      children: const [
+                        Text(
                           "Project",
                           style: TextStyle(
                               color: Colors.blueAccent,
                               fontSize: 22.0,
                               fontWeight: FontWeight.w600),
                         ),
-                        const SizedBox(
+                        SizedBox(
                           height: 7,
                         ),
-                        const Text(
+                        Text(
                           "15",
                           style: TextStyle(
                               color: Colors.black,

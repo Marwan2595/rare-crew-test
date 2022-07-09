@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rare_crew_test/view_models/home_view_model.dart';
+import 'package:rare_crew_test/views/add_edit_item.dart';
 import 'package:rare_crew_test/views/home_view.dart';
 
 import 'profile_view.dart';
@@ -20,13 +21,6 @@ class _NavigationContainerState extends State<NavigationContainer> {
     "Home",
     "Profile",
   ];
-  // void updateIndex() {
-  //   navigationIndex = -1;
-  //   setState(() {
-  //     navigationIndex = 0;
-  //   });
-  // }
-
   @override
   void initState() {
     super.initState();
@@ -39,42 +33,44 @@ class _NavigationContainerState extends State<NavigationContainer> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(titles[navigationIndex]),
-          centerTitle: true,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(titles[navigationIndex]),
+        centerTitle: true,
+      ),
+      body: screens[navigationIndex],
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddEditItem(),
+            ),
+          );
+        },
+        child: const Icon(
+          Icons.add,
         ),
-        body: screens[navigationIndex],
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            //openForm(context);
-            hvm.addItem(title: "Hello", description: "Newwwwwwwwwww");
-          },
-          child: const Icon(
-            Icons.add,
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: navigationIndex,
+        onTap: (index) {
+          setState(() {
+            navigationIndex = index;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(
+            label: "Home",
+            icon: Icon(Icons.home),
           ),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: navigationIndex,
-          onTap: (index) {
-            setState(() {
-              navigationIndex = index;
-            });
-          },
-          items: const [
-            BottomNavigationBarItem(
-              label: "Home",
-              icon: Icon(Icons.home),
+          BottomNavigationBarItem(
+            label: "Profile",
+            icon: Icon(
+              Icons.person,
             ),
-            BottomNavigationBarItem(
-              label: "Profile",
-              icon: Icon(
-                Icons.person,
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

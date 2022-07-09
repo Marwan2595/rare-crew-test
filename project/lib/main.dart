@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rare_crew_test/views/navigation_container.dart';
+import 'package:rare_crew_test/views/login_view.dart';
 
 void main() {
   runApp(const ProviderScope(
@@ -15,13 +15,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Rare Crew Test',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: NavigationContainer(
-        index: 0,
-      ),
+      // home: NavigationContainer(
+      //   index: 0,
+      // ),
+      home: LoginView(),
     );
   }
 }

@@ -3,13 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rare_crew_test/models/item.dart';
 import 'package:rare_crew_test/view_models/home_view_model.dart';
 
+import '../views/add_edit_item.dart';
 import '../views/navigation_container.dart';
 
 class ItemCard extends ConsumerWidget {
   ItemCard({Key? key, required this.cardItem}) : super(key: key);
   final Item cardItem;
 
-  HomeViewModel vm = HomeViewModel();
+  HomeViewModel homeViewModel = HomeViewModel();
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Card(
@@ -40,13 +41,10 @@ class ItemCard extends ConsumerWidget {
                         color: Colors.green,
                       ),
                       onPressed: () {
-                        //openForm(context);
-                        ref.refresh(vm.homeAddProvider);
-                        // updateIndex();
-                        Navigator.pushReplacement(
+                        Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => NavigationContainer(index: 0),
+                            builder: (context) => AddEditItem(item: cardItem),
                           ),
                         );
                       },
@@ -60,7 +58,14 @@ class ItemCard extends ConsumerWidget {
                         size: 25,
                         color: Colors.red,
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        deleteDialog(
+                          item: cardItem,
+                          context: context,
+                          homeViewModel: homeViewModel,
+                          ref: ref,
+                        );
+                      },
                     ),
                   ],
                 )
@@ -76,6 +81,55 @@ class ItemCard extends ConsumerWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  deleteDialog({
+    required Item item,
+    required context,
+    required WidgetRef ref,
+    required HomeViewModel homeViewModel,
+  }) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Row(
+          children: const [
+            Icon(
+              Icons.warning,
+              color: Colors.red,
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Text("Delete Item"),
+          ],
+        ),
+        content:
+            Text('Are you sure you want to delete item ${cardItem.title} ? '),
+        actions: [
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              ref.refresh(homeViewModel.homeDeleteProvider(
+                item.id!,
+              ));
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => NavigationContainer(index: 0),
+                ),
+              );
+            },
+            child: const Text('Delete'),
+          ),
+        ],
       ),
     );
   }
